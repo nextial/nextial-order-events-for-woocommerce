@@ -22,6 +22,8 @@ Once connected, you just tell ChatGPT what you want, in plain language:
 
 ChatGPT subscribes to the event, your store notifies it the moment it happens, and ChatGPT does the rest. No Zapier, no polling, no code.
 
+https://youtu.be/3HoLkg69c0o
+
 = Events =
 
 * **order.created** – a new order was placed. Fully featured and free, no limits.
