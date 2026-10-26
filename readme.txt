@@ -1,10 +1,10 @@
-=== Nextial Order Events for WooCommerce ===
+=== Nextial Order Events – WooCommerce MCP Server for ChatGPT Order Alerts ===
 Contributors: nextial
-Tags: chatgpt, mcp, order notifications, new order alert, ai assistant
+Tags: mcp, chatgpt, order notifications, new order alert, ai
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -123,6 +123,9 @@ Nextial Order Events implements the open Model Context Protocol (2026-07-28, wit
 3. The built-in self-test, test receiver and delivery log.
 
 == Changelog ==
+
+= 1.0.4 =
+* Clearer plugin name in the directory. No code changes.
 
 = 1.0.3 =
 * Link to the optional Pro add-on page on the Plugins screen and the settings page (shown only while no add-on is active).
