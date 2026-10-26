@@ -1,0 +1,27 @@
+# Updates readme.txt and the WordPress.org images (.wordpress-org/) without a new version.
+name: Update WordPress.org readme and assets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "readme.txt"
+      - ".wordpress-org/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  assets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: WordPress.org readme/assets update
+        uses: 10up/action-wordpress-plugin-asset-update@2480306f6f693672726d08b5917ea114cb2825f7 # 2.2.0
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: nextial-order-events-for-woocommerce
+          IGNORE_OTHER_FILES: true

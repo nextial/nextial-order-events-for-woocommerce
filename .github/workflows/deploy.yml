@@ -1,0 +1,42 @@
+# Publishes a new version to WordPress.org when a GitHub release is published.
+# Version = release tag (e.g. 1.0.4): it must match "Version" in the plugin header
+# and "Stable tag" in readme.txt.
+name: Deploy to WordPress.org
+
+on:
+  release:
+    types: [released]
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Dry run (check everything, commit nothing)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Check versions match
+        if: github.event_name == 'release'
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          HEADER=$(grep -m1 -E '^\s*\*\s*Version:' nextial-order-events-for-woocommerce.php | awk '{print $NF}')
+          STABLE=$(grep -m1 -E '^Stable tag:' readme.txt | awk '{print $NF}')
+          echo "tag=$TAG header=$HEADER stable=$STABLE"
+          [ "$TAG" = "$HEADER" ] && [ "$TAG" = "$STABLE" ] || { echo "Version mismatch"; exit 1; }
+
+      - name: WordPress.org plugin deploy
+        uses: 10up/action-wordpress-plugin-deploy@54bd289b8525fd23a5c365ec369185f2966529c2 # 2.3.0
+        with:
+          dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: nextial-order-events-for-woocommerce
+          VERSION: ${{ github.event_name == 'workflow_dispatch' && '1.0.3' || '' }}
