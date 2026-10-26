@@ -22,7 +22,7 @@ Once connected, you just tell ChatGPT what you want, in plain language:
 
 ChatGPT subscribes to the event, your store notifies it the moment it happens, and ChatGPT does the rest. No Zapier, no polling, no code.
 
-https://youtu.be/3HoLkg69c0o
+https://youtu.be/P749HMDlHBI
 
 = Events =
 
