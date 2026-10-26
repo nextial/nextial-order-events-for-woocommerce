@@ -80,7 +80,7 @@ WooCommerce is a trademark of Automattic Inc. ChatGPT is a trademark of OpenAI. 
 3. In ChatGPT open **Plugins → Add → Add custom MCP server**, paste the URL and choose **OAuth** as authentication.
 4. ChatGPT opens your site: sign in and press **Allow**.
 5. Switch to a **Work** chat, type `@` and pick your store, then ask for example: "Tell me here whenever a new order arrives."
-6. Place a test order (cash on delivery or bank transfer): ChatGPT writes in the chat by itself a few seconds later.
+6. Place a test order (cash on delivery or bank transfer): ChatGPT writes in the chat by itself, usually within a few minutes (your store notifies ChatGPT within seconds; ChatGPT then runs the task).
 
 == Frequently Asked Questions ==
 

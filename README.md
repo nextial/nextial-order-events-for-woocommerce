@@ -39,7 +39,7 @@ The settings page (WooCommerce → Nextial Order Events) includes a full self-te
 2. In ChatGPT: **Plugins → Add → Add custom MCP server**, paste the URL, choose **OAuth**.
 3. Sign in on your site and press **Allow**.
 4. In a **Work** chat, type `@`, pick your store and ask: "Tell me here whenever a new order arrives."
-5. Place a test order: ChatGPT writes in the chat a few seconds later.
+5. Place a test order: ChatGPT writes in the chat by itself, usually within a few minutes.
 
 ## Requirements and limits
 
