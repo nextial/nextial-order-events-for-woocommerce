@@ -1,4 +1,5 @@
-# Publishes a new version to WordPress.org when a GitHub release is published.
+# Publishes a new version to WordPress.org when a GitHub release is published
+# or a version tag (e.g. 1.0.5) is pushed.
 # Version = release tag (e.g. 1.0.4): it must match "Version" in the plugin header
 # and "Stable tag" in readme.txt.
 name: Deploy to WordPress.org
@@ -6,6 +7,8 @@ name: Deploy to WordPress.org
 on:
   release:
     types: [released]
+  push:
+    tags: ["[0-9]+.[0-9]+.[0-9]+"]
   workflow_dispatch:
     inputs:
       dry-run:
@@ -23,7 +26,7 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Check versions match
-        if: github.event_name == 'release'
+        if: github.event_name != 'workflow_dispatch'
         run: |
           TAG="${GITHUB_REF_NAME#v}"
           HEADER=$(grep -m1 -E '^\s*\*\s*Version:' nextial-order-events-for-woocommerce.php | awk '{print $NF}')
@@ -39,4 +42,4 @@ jobs:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SLUG: nextial-order-events-for-woocommerce
-          VERSION: ${{ github.event_name == 'workflow_dispatch' && '1.0.3' || '' }}
+          VERSION: ${{ github.event_name != 'workflow_dispatch' && github.ref_name || '' }}
