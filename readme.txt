@@ -30,7 +30,19 @@ https://youtu.be/P749HMDlHBI
 
 = Nextial Order Events Pro =
 
-An optional, separate add-on ([nextial.it/order-events](https://nextial.it/order-events/), sold outside WordPress.org) adds more events for stores that want ChatGPT to watch for lost money too: failed payments, low and out-of-stock products, and server-side filters such as a minimum order total. Nextial Order Events works on its own and is not limited in any way without it.
+An optional, separate add-on ([nextial.it/order-events](https://nextial.it/order-events/), sold outside WordPress.org) tells ChatGPT when something goes wrong or needs you – the moments where a store loses money:
+
+* **order.payment_failed** – a payment did not go through.
+* **order.refunded** – a full or partial refund was issued.
+* **order.status_changed** – an order changed status, optionally to a specific one.
+* **order.stalled** – an order has waited in Pending payment or On hold for over 24 hours (e.g. a bank transfer nobody paid).
+* **product.low_stock** – a product reached its low-stock threshold or went out of stock.
+* **review.created** – a customer left a review, optionally only at or below a rating.
+* **customer.created** – a new customer account was registered.
+* **store.daily_summary** – today's orders, revenue, refunds, failed payments, new customers and best sellers, once a day.
+* **Order filters** – only notify for orders above a total, or by product, category, country or payment method (fewer, more useful ChatGPT runs).
+
+Nextial Order Events works on its own and is not limited in any way without it.
 
 = Read-only tools =
 
