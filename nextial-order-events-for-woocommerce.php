@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Nextial Order Events – WooCommerce MCP Server for ChatGPT Order Alerts
  * Description:       MCP Events for WooCommerce. Lets ChatGPT and other MCP clients get a signed notification for every new WooCommerce order through MCP Events and react automatically.
- * Version:           1.0.4
+ * Version:           1.0.5
  * Requires at least: 6.5
  * Requires PHP:      7.4
  * Requires Plugins:  woocommerce
@@ -17,7 +17,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'NEXTIAL_OE_VERSION', '1.0.4' );
+define( 'NEXTIAL_OE_VERSION', '1.0.5' );
 define( 'NEXTIAL_OE_FILE', __FILE__ );
 define( 'NEXTIAL_OE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'NEXTIAL_OE_DB_VERSION', '2' );

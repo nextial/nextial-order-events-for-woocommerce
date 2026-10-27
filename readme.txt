@@ -4,7 +4,7 @@ Tags: mcp, chatgpt, order notifications, new order alert, ai
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -135,6 +135,9 @@ Nextial Order Events implements the open Model Context Protocol (2026-07-28, wit
 3. The built-in self-test, test receiver and delivery log.
 
 == Changelog ==
+
+= 1.0.5 =
+* Add-ons can provide their own read-only tools (filter nextial_oe_tool_call).
 
 = 1.0.4 =
 * Clearer plugin name in the directory. No code changes.

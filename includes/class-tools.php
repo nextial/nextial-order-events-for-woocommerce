@@ -82,6 +82,14 @@ class Nextial_OE_Tools {
 		if ( ! function_exists( 'wc_get_order' ) ) {
 			return new WP_Error( 'nextial_oe_no_wc', 'WooCommerce is not active on this site.' );
 		}
+		/**
+		 * Add-ons run their own (read-only) tools here: return data or WP_Error,
+		 * or null to let Nextial Order Events handle the call.
+		 */
+		$pre = apply_filters( 'nextial_oe_tool_call', null, $name, $args );
+		if ( null !== $pre ) {
+			return $pre;
+		}
 		switch ( $name ) {
 			case 'get_order':
 				$order_id = isset( $args['order_id'] ) ? (int) $args['order_id'] : 0;
