@@ -34,6 +34,10 @@ jobs:
           echo "tag=$TAG header=$HEADER stable=$STABLE"
           [ "$TAG" = "$HEADER" ] && [ "$TAG" = "$STABLE" ] || { echo "Version mismatch"; exit 1; }
 
+      - name: Version from the plugin header
+        id: ver
+        run: echo "version=$(grep -m1 -E '^\s*\*\s*Version:' nextial-order-events-for-woocommerce.php | awk '{print $NF}')" >> "$GITHUB_OUTPUT"
+
       - name: WordPress.org plugin deploy
         uses: 10up/action-wordpress-plugin-deploy@54bd289b8525fd23a5c365ec369185f2966529c2 # 2.3.0
         with:
@@ -42,4 +46,4 @@ jobs:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SLUG: nextial-order-events-for-woocommerce
-          VERSION: ${{ github.event_name != 'workflow_dispatch' && github.ref_name || '' }}
+          VERSION: ${{ steps.ver.outputs.version }}
