@@ -40,6 +40,10 @@ An optional, separate add-on ([nextial.it/order-events](https://nextial.it/order
 * **review.created** – a customer left a review, optionally only at or below a rating.
 * **customer.created** – a new customer account was registered.
 * **store.daily_summary** – today's orders, revenue, refunds, failed payments, new customers and best sellers, once a day.
+* **order.not_shipped** – a paid order is still in Processing after a number of days you choose (default 3).
+* **customer.vip_order** – a returning customer above your order count or total spent placed a new order.
+* **payments.failed_burst** – many failed payments in a few minutes, a typical sign of card testing.
+* **get_sales_report** tool – ChatGPT reads revenue, orders, refunds and best sellers for today, yesterday, the last 7 or 30 days, or a month, when you ask.
 * **Order filters** – only notify for orders above a total, or by product, category, country or payment method (fewer, more useful ChatGPT runs).
 
 Nextial Order Events works on its own and is not limited in any way without it.
