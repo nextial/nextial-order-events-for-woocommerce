@@ -128,6 +128,10 @@ Deliveries are sent in the background by WooCommerce's Action Scheduler (WP-Cron
 
 Your server must let WordPress answer `/.well-known/oauth-protected-resource/...` and `/.well-known/oauth-authorization-server/...`. Some hosts reserve `/.well-known/`. Meanwhile you can use the secret URL option.
 
+= WooCommerce is moving its built-in MCP endpoint to the MCP Adapter. Does this plugin still work? =
+
+Yes. Nextial Order Events has its own endpoint and does not use WooCommerce's built-in MCP endpoint or REST API keys. The MCP Adapter lets an assistant read store data when you ask; Nextial Order Events adds events, so the assistant is told when something happens (for example a new order). The two can be used side by side.
+
 = Other assistants? =
 
 Nextial Order Events implements the open Model Context Protocol (2026-07-28, with compatibility for 2025 revisions) and the MCP Events webhook delivery, so any compatible client can connect.
