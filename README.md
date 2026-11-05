@@ -8,7 +8,7 @@ A WordPress plugin that turns a WooCommerce store into an MCP server with **MCP 
 
 ![Demo: a WooCommerce order arrives and ChatGPT posts the alert and a thank-you e-mail draft](.github/demo.gif)
 
-- Watch the 30-second demo on YouTube: https://youtu.be/P749HMDlHBI
+- Watch the 70-second setup tutorial on YouTube: https://youtu.be/Ytd8S3nTx0Y
 - Install from WordPress.org: https://wordpress.org/plugins/nextial-order-events-for-woocommerce/
 - Pro add-on (more events): https://nextial.it/order-events/
 
