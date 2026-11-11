@@ -1,6 +1,6 @@
 === Nextial Order Events – WooCommerce MCP Server for ChatGPT Order Alerts ===
 Contributors: nextial
-Tags: mcp, chatgpt, order notifications, new order alert, ai
+Tags: woocommerce, chatgpt, mcp, order notifications, new order alert
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
@@ -11,6 +11,8 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 WooCommerce MCP server for ChatGPT: a new order alert the moment an order arrives, and ChatGPT acts on it by itself. Built on MCP Events.
 
 == Description ==
+
+**Before you install, you need:** a ChatGPT plan with **Work** chats and custom MCP servers (ChatGPT **Plus** or higher), WooCommerce, and a site on **HTTPS**. On the free ChatGPT plan ChatGPT can read your orders but cannot react to new ones.
 
 Nextial Order Events is a WooCommerce MCP server and ChatGPT integration built on **MCP Events**, the new way for ChatGPT to react when something changes in a connected app. Instead of waiting for you to ask, your store sends ChatGPT a signed new order notification and ChatGPT acts on it.
 
