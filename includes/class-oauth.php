@@ -371,6 +371,73 @@ class Nextial_OE_OAuth {
 		return array_values( array_unique( $out ) );
 	}
 
+	/**
+	 * Is $redirect one of the client's registered redirect URIs?
+	 *
+	 * Exact match, except for loopback http URIs (localhost, 127.0.0.1, [::1]):
+	 * native clients such as Claude Code bind a random port for each sign-in,
+	 * so the port is ignored there (RFC 8252 sections 7.3 and 8.3). Scheme,
+	 * host, path and query must still match exactly.
+	 *
+	 * @param string   $redirect   Requested redirect_uri.
+	 * @param string[] $registered Registered redirect URIs.
+	 */
+	public static function redirect_registered( $redirect, $registered ) {
+		if ( ! is_string( $redirect ) || ! is_array( $registered ) ) {
+			return false;
+		}
+		if ( in_array( $redirect, $registered, true ) ) {
+			return true;
+		}
+		$want = self::loopback_key( $redirect );
+		if ( null === $want ) {
+			return false;
+		}
+		foreach ( $registered as $r ) {
+			if ( is_string( $r ) && self::loopback_key( $r ) === $want ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/** "http://host/path?query" without the port for a loopback http URI, otherwise null. */
+	private static function loopback_key( $uri ) {
+		$p = wp_parse_url( $uri );
+		if ( ! is_array( $p ) || 'http' !== ( $p['scheme'] ?? '' ) || empty( $p['host'] ) || isset( $p['user'] ) || isset( $p['pass'] ) || isset( $p['fragment'] ) ) {
+			return null;
+		}
+		$host = $p['host']; // Case-sensitive on purpose: registered and requested must be spelled the same.
+		if ( ! in_array( $host, array( 'localhost', '127.0.0.1', '[::1]' ), true ) ) {
+			return null;
+		}
+		if ( isset( $p['port'] ) && ( ! is_int( $p['port'] ) || $p['port'] < 1 || $p['port'] > 65535 ) ) {
+			return null;
+		}
+		return 'http://' . $host . ( $p['path'] ?? '' ) . ( isset( $p['query'] ) ? '?' . $p['query'] : '' );
+	}
+
+	/**
+	 * Is this one of the known AI apps (ChatGPT, Claude, Claude Code), judged by
+	 * the client_id host AND where the code will be sent?
+	 */
+	public static function is_known_app( $client_id, $redirect ) {
+		$id_host = strtolower( (string) wp_parse_url( (string) $client_id, PHP_URL_HOST ) );
+		$scheme  = strtolower( (string) wp_parse_url( (string) $client_id, PHP_URL_SCHEME ) );
+		$dest    = strtolower( (string) wp_parse_url( (string) $redirect, PHP_URL_HOST ) );
+		if ( 'https' !== $scheme ) {
+			return false;
+		}
+		if ( 'chatgpt.com' === $id_host ) {
+			return in_array( $dest, array( 'chatgpt.com', 'chat.openai.com' ), true );
+		}
+		if ( 'claude.ai' === $id_host ) {
+			// claude.ai, Desktop, mobile and Cowork come back to claude.ai; Claude Code to a loopback port.
+			return 'claude.ai' === $dest || null !== self::loopback_key( (string) $redirect );
+		}
+		return false;
+	}
+
 	private static function clean_name( $name, $fallback_url ) {
 		$name = is_string( $name ) ? trim( wp_strip_all_tags( $name ) ) : '';
 		if ( '' === $name ) {
@@ -397,7 +464,7 @@ class Nextial_OE_OAuth {
 			return array( 'fatal' => $client->get_error_message() );
 		}
 		$redirect = $q['redirect_uri'] ?? '';
-		if ( ! is_string( $redirect ) || ! in_array( $redirect, $client['redirect_uris'], true ) ) {
+		if ( ! is_string( $redirect ) || ! self::redirect_registered( $redirect, $client['redirect_uris'] ) ) {
 			return array( 'fatal' => 'The redirect URI is not registered for this client.' );
 		}
 		$state = isset( $q['state'] ) && is_string( $q['state'] ) ? $q['state'] : null;
@@ -886,7 +953,7 @@ class Nextial_OE_OAuth {
 			self::SCOPE_EVENTS => __( 'Be notified of store events, such as new orders', 'nextial-order-events-for-woocommerce' ),
 		);
 		$dest     = (string) wp_parse_url( $check['params']['redirect_uri'], PHP_URL_HOST );
-		$official = 0 === strpos( $check['client']['client_id'], 'https://chatgpt.com/' ) && in_array( $dest, array( 'chatgpt.com', 'chat.openai.com' ), true );
+		$official = self::is_known_app( $check['client']['client_id'], $check['params']['redirect_uri'] );
 		ob_start();
 		?>
 		<?php if ( $official ) : ?>
@@ -896,7 +963,7 @@ class Nextial_OE_OAuth {
 		<?php endif; ?>
 		<p><?php echo wp_kses( sprintf( /* translators: %s: host name */ __( 'Access will be sent to: <strong>%s</strong>', 'nextial-order-events-for-woocommerce' ), esc_html( $dest ) ), array( 'strong' => array() ) ); ?></p>
 		<?php if ( ! $official ) : ?>
-			<p class="warn"><?php esc_html_e( 'This is not the official ChatGPT app. Only continue if you started this connection yourself and recognise the address above.', 'nextial-order-events-for-woocommerce' ); ?></p>
+			<p class="warn"><?php esc_html_e( 'This is not a recognised AI app (ChatGPT or Claude). Only continue if you started this connection yourself and recognise the address above.', 'nextial-order-events-for-woocommerce' ); ?></p>
 		<?php endif; ?>
 		<p><?php esc_html_e( 'It will be able to:', 'nextial-order-events-for-woocommerce' ); ?></p>
 		<ul>

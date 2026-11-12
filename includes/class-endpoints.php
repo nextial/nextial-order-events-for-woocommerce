@@ -161,7 +161,7 @@ class Nextial_OE_Endpoints {
 	}
 
 	/**
-	 * Origin is only sent by browsers. Allow this site and ChatGPT; reject
+	 * Origin is only sent by browsers. Allow this site, ChatGPT and Claude; reject
 	 * other browser origins (DNS-rebinding / cross-site protection).
 	 */
 	private static function origin_allowed( $origin ) {
@@ -170,7 +170,7 @@ class Nextial_OE_Endpoints {
 			return false;
 		}
 		$host    = strtolower( $host );
-		$allowed = array( strtolower( (string) wp_parse_url( home_url(), PHP_URL_HOST ) ), 'chatgpt.com', 'chat.openai.com' );
+		$allowed = array( strtolower( (string) wp_parse_url( home_url(), PHP_URL_HOST ) ), 'chatgpt.com', 'chat.openai.com', 'claude.ai' );
 		$allowed = apply_filters( 'nextial_oe_allowed_origins', $allowed );
 		foreach ( $allowed as $a ) {
 			if ( $host === $a || substr( $host, -strlen( '.' . $a ) ) === '.' . $a ) {
