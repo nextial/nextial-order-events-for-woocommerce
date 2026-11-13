@@ -4,7 +4,7 @@ Tags: woocommerce, chatgpt, mcp, order notifications, new order alert
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,6 +145,9 @@ Nextial Order Events implements the open Model Context Protocol (2026-07-28, wit
 3. The built-in self-test, test receiver and delivery log.
 
 == Changelog ==
+
+= 1.0.7 =
+* "What's new since last time": list_recent_orders accepts since (orders created at or after a moment) and updated_since (orders changed, e.g. new status), and returns checked_at and has_more. Useful for AI clients without live events, such as Claude scheduled tasks: "every hour, list orders since the last checked_at".
 
 = 1.0.6 =
 * Sign-in: native MCP clients that listen on a random local port (such as Claude Code) can now connect. Loopback redirect URIs are matched without the port (RFC 8252); everything else still needs an exact match.
