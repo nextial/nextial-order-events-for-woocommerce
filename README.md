@@ -51,6 +51,11 @@ The settings page (WooCommerce → Nextial Order Events) includes a full self-te
 
 Add-ons can register their own events with the filters `nextial_oe_event_definitions`, `nextial_oe_event_matches`, `nextial_oe_event_payload`, `nextial_oe_sample_payload` and queue deliveries with `Nextial_OE_Events::enqueue()`.
 
+## Other Nextial plugins
+
+- [Nextial Form Events](https://github.com/nextial/nextial-form-events) — Contact Form 7, WPForms, Fluent, Gravity and Formidable entries to ChatGPT in real time ([WordPress.org](https://wordpress.org/plugins/nextial-form-events/))
+- [Nextial Order Archive](https://github.com/nextial/nextial-order-archive) — archive old WooCommerce orders and keep the Orders screen fast ([WordPress.org](https://wordpress.org/plugins/nextial-order-archive/))
+
 ## Support
 
 Use the [WordPress.org support forum](https://wordpress.org/support/plugin/nextial-order-events-for-woocommerce/) or open an issue here. The released version lives on WordPress.org; this repository mirrors it.
