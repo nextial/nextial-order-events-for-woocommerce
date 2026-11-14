@@ -47,6 +47,7 @@ An optional, separate add-on ([nextial.it/order-events](https://nextial.it/order
 * **payments.failed_burst** – many failed payments in a few minutes, a typical sign of card testing.
 * **get_sales_report** tool – ChatGPT reads revenue, orders, refunds and best sellers for today, yesterday, the last 7 or 30 days, or a month, when you ask.
 * **Order filters** – only notify for orders above a total, or by product, category, country or payment method (fewer, more useful ChatGPT runs).
+* **Supplier alerts** – send each supplier, warehouse or team only their part of an order, by email, Slack or a signed webhook. Rules by product, SKU, category, tag or shipping method; prices and customer contact details left out unless you switch them on; sent once per order, when it is paid (or completed).
 
 Nextial Order Events works on its own and is not limited in any way without it.
 
