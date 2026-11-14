@@ -54,6 +54,7 @@ class Nextial_OE_Dispatcher {
 	 * @return int|false Delivery id, or false if the body was too large.
 	 */
 	public static function emit_to( array $sub, $name, array $data, $now = false ) {
+		Nextial_OE_Input::short_floats();
 		$event_id = 'evt_' . Nextial_OE_Store::random_token( 24 );
 		$body     = wp_json_encode(
 			array(

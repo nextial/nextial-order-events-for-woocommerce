@@ -292,6 +292,7 @@ class Nextial_OE_Endpoints {
 		}
 		if ( null !== $payload ) {
 			header( 'Content-Type: application/json; charset=utf-8' );
+			Nextial_OE_Input::short_floats();
 			echo wp_json_encode( $payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ); // phpcs:ignore WordPress.Security.EscapeOutput
 		}
 		// Let shutdown hooks (event flush) still run.

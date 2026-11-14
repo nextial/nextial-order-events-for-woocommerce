@@ -4,7 +4,7 @@ Tags: woocommerce, chatgpt, mcp, order notifications, new order alert
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,10 @@ An optional, separate add-on ([nextial.it/order-events](https://nextial.it/order
 * **Supplier alerts** – send each supplier, warehouse or team only their part of an order, by email, Slack or a signed webhook. Rules by product, SKU, category, tag or shipping method; prices and customer contact details left out unless you switch them on; sent once per order, when it is paid (or completed).
 
 Nextial Order Events works on its own and is not limited in any way without it.
+
+= Use it with Claude =
+
+Tested live with Claude (claude.ai): Settings → Connectors → "Add custom connector", paste the URL from WooCommerce → Nextial Order Events, sign in and press *Allow*. No client ID or secret needed. Claude can read orders, low stock and (with Pro) the sales report. Claude does not receive live events yet: for alerts, use a Claude scheduled task such as "every hour, list the orders since the last checked_at". Claude Code can connect too (`claude mcp add --transport http`).
 
 = Read-only tools =
 
@@ -146,6 +150,10 @@ Nextial Order Events implements the open Model Context Protocol (2026-07-28, wit
 3. The built-in self-test, test receiver and delivery log.
 
 == Changelog ==
+
+= 1.0.9 =
+* Numbers in replies to ChatGPT and Claude and in event notifications are now written short (52.8, not 52.799999999999997) on hosts whose PHP still uses serialize_precision = 17.
+* Settings page and readme: how to connect Claude (tested live), next to ChatGPT.
 
 = 1.0.8 =
 * Works side by side with other MCP plugins (AI Engine, BetterLinks and others): the shared host-root URL /.well-known/oauth-protected-resource is now answered only if no other plugin answers it. Before, Order Events answered it first and could break the other plugin's sign-in from ChatGPT or Claude. Order Events' own sign-in is unchanged (it uses its own path, announced in the WWW-Authenticate header).

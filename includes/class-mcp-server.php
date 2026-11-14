@@ -209,6 +209,7 @@ class Nextial_OE_MCP_Server {
 	}
 
 	private function tools_call( array $params ) {
+		Nextial_OE_Input::short_floats();
 		$name = $params['name'] ?? null;
 		$args = isset( $params['arguments'] ) && is_array( $params['arguments'] ) ? $params['arguments'] : array();
 		$known = wp_list_pluck( Nextial_OE_Tools::definitions(), 'name' );

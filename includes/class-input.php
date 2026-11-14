@@ -17,6 +17,18 @@ class Nextial_OE_Input {
 	const MAX_DEPTH = 8;
 
 	/**
+	 * Shortest float output in JSON (52.8, not 52.799999999999997).
+	 * Some hosts still set serialize_precision = 17 in php.ini; WordPress core
+	 * and JSON clients expect -1 (PHP's default since 7.1). Applied only while
+	 * this plugin writes its own JSON.
+	 */
+	public static function short_floats() {
+		if ( '-1' !== (string) ini_get( 'serialize_precision' ) ) {
+			ini_set( 'serialize_precision', '-1' ); // phpcs:ignore WordPress.PHP.IniSet.Risky
+		}
+	}
+
+	/**
 	 * Decode a raw JSON request body and sanitize every key and string value.
 	 *
 	 * Strings keep their exact characters (URLs, PKCE values and signatures are

@@ -492,6 +492,12 @@ class Nextial_OE_Admin {
 					<button type="button" class="button button-primary" data-nextial-oe-copy="nextial-oe-url" data-nextial-oe-copied="<?php esc_attr_e( 'Copied', 'nextial-order-events-for-woocommerce' ); ?>"><?php esc_html_e( 'Copy URL', 'nextial-order-events-for-woocommerce' ); ?></button>
 					<?php self::post_button( 'nextial_oe_oauth_check', __( 'Check OAuth setup', 'nextial-order-events-for-woocommerce' ), array(), 'button button-secondary' ); ?>
 				</p>
+				<h3><?php esc_html_e( 'Or connect Claude', 'nextial-order-events-for-woocommerce' ); ?></h3>
+				<ol>
+					<li><?php esc_html_e( 'In Claude open Settings → Connectors → "Add custom connector" and paste the same URL. No client ID or secret is needed.', 'nextial-order-events-for-woocommerce' ); ?></li>
+					<li><?php esc_html_e( 'Claude opens this site: sign in and press "Allow". Then ask for example "List my latest orders" or "How did sales go yesterday?".', 'nextial-order-events-for-woocommerce' ); ?></li>
+					<li><?php esc_html_e( 'Claude does not receive live events yet. For alerts, create a scheduled task in Claude, e.g. "Every hour, list the orders since the last checked_at and tell me about new ones".', 'nextial-order-events-for-woocommerce' ); ?></li>
+				</ol>
 				<?php $conns = Nextial_OE_OAuth::connections(); ?>
 				<?php if ( $conns ) : ?>
 					<h3><?php esc_html_e( 'Connected apps', 'nextial-order-events-for-woocommerce' ); ?></h3>
