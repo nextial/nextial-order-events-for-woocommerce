@@ -835,7 +835,7 @@ class Nextial_OE_OAuth {
 
 		$map = array(
 			'/.well-known/oauth-protected-resource' . $res_path => 'prm',
-			'/.well-known/oauth-protected-resource'             => 'prm',
+			// The bare host-root form is shared by every MCP plugin on the site: see route_fallback().
 			'/.well-known/oauth-authorization-server' . $iss_path => 'asm',
 			$iss_path . '/.well-known/oauth-authorization-server' => 'asm',
 			$iss_path . '/authorize'                              => 'authorize',
@@ -844,6 +844,25 @@ class Nextial_OE_OAuth {
 			$iss_path . '/revoke'                                 => 'revoke',
 		);
 		return $map[ $path ] ?? null;
+	}
+
+	/**
+	 * Bare host-root /.well-known/oauth-protected-resource: only clients that ignore our
+	 * WWW-Authenticate header and fail the path-inserted URL fall back to it. Other MCP
+	 * plugins (AI Engine, BetterLinks, the MCP Adapter) answer the same path for their own
+	 * resource, and answering it first broke their sign-in with ChatGPT and Claude. So it is
+	 * served late (parse_request priority 1000), only if nobody else answered it.
+	 *
+	 * @param string $path Absolute URL path of the request.
+	 * @return string|null Handler name.
+	 */
+	public static function route_fallback( $path ) {
+		$path = untrailingslashit( '/' . ltrim( (string) $path, '/' ) );
+		if ( '/.well-known/oauth-protected-resource' !== $path ) {
+			return null;
+		}
+		/** Return false to never answer the bare host-root metadata URL. */
+		return apply_filters( 'nextial_oe_serve_root_resource_metadata', true ) ? 'prm' : null;
 	}
 
 	public static function serve( $handler ) {

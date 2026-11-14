@@ -24,6 +24,16 @@ class Nextial_OE_Endpoints {
 	public static function init() {
 		add_action( 'rest_api_init', array( __CLASS__, 'register_routes' ) );
 		add_action( 'parse_request', array( __CLASS__, 'maybe_handle_query' ), 0 );
+		add_action( 'parse_request', array( __CLASS__, 'maybe_handle_root_fallback' ), 1000 );
+	}
+
+	/** Late fallback for the shared bare well-known URL (see Nextial_OE_OAuth::route_fallback()). */
+	public static function maybe_handle_root_fallback() {
+		$path    = isset( $_SERVER['REQUEST_URI'] ) ? (string) wp_parse_url( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), PHP_URL_PATH ) : '';
+		$handler = '' !== $path ? Nextial_OE_OAuth::route_fallback( $path ) : null;
+		if ( $handler ) {
+			Nextial_OE_OAuth::serve( $handler );
+		}
 	}
 
 	public static function mcp_url() {
