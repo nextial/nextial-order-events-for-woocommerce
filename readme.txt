@@ -4,7 +4,7 @@ Tags: woocommerce, chatgpt, mcp, order notifications, new order alert
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.9
+Stable tag: 1.0.10
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -141,7 +141,7 @@ Yes. Nextial Order Events has its own endpoint and does not use WooCommerce's bu
 
 = Other assistants? =
 
-Nextial Order Events implements the open Model Context Protocol (2026-07-28, with compatibility for 2025 revisions) and the MCP Events webhook delivery, so any compatible client can connect.
+Nextial Order Events implements the open Model Context Protocol (2026-07-28, with compatibility for 2025 revisions) and the MCP Events webhook delivery, so any compatible client can connect. VS Code (GitHub Copilot agent mode) and Cursor connect with the same URL and OAuth sign-in: add it as an HTTP MCP server and sign in when asked (both tested in a lab with their real sign-in settings). VS Code is recognised on the consent screen; Cursor registers itself, so the screen shows its self-declared name with a warning: continue only if you started the connection.
 
 == Screenshots ==
 
@@ -150,6 +150,9 @@ Nextial Order Events implements the open Model Context Protocol (2026-07-28, wit
 3. The built-in self-test, test receiver and delivery log.
 
 == Changelog ==
+
+= 1.0.10 =
+* Sign-in: VS Code (its published identity at vscode.dev) is now recognised on the consent screen, like ChatGPT and Claude. VS Code and Cursor tested end to end in a lab (sign-in, tokens, refresh, tools); no other change was needed.
 
 = 1.0.9 =
 * Numbers in replies to ChatGPT and Claude and in event notifications are now written short (52.8, not 52.799999999999997) on hosts whose PHP still uses serialize_precision = 17.

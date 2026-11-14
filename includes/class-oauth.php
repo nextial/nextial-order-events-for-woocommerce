@@ -418,7 +418,7 @@ class Nextial_OE_OAuth {
 	}
 
 	/**
-	 * Is this one of the known AI apps (ChatGPT, Claude, Claude Code), judged by
+	 * Is this one of the known AI apps (ChatGPT, Claude, Claude Code, VS Code), judged by
 	 * the client_id host AND where the code will be sent?
 	 */
 	public static function is_known_app( $client_id, $redirect ) {
@@ -434,6 +434,10 @@ class Nextial_OE_OAuth {
 		if ( 'claude.ai' === $id_host ) {
 			// claude.ai, Desktop, mobile and Cowork come back to claude.ai; Claude Code to a loopback port.
 			return 'claude.ai' === $dest || null !== self::loopback_key( (string) $redirect );
+		}
+		if ( 'vscode.dev' === $id_host ) {
+			// VS Code publishes its identity at vscode.dev: it comes back to vscode.dev or to a loopback port.
+			return 'vscode.dev' === $dest || null !== self::loopback_key( (string) $redirect );
 		}
 		return false;
 	}
@@ -982,7 +986,7 @@ class Nextial_OE_OAuth {
 		<?php endif; ?>
 		<p><?php echo wp_kses( sprintf( /* translators: %s: host name */ __( 'Access will be sent to: <strong>%s</strong>', 'nextial-order-events-for-woocommerce' ), esc_html( $dest ) ), array( 'strong' => array() ) ); ?></p>
 		<?php if ( ! $official ) : ?>
-			<p class="warn"><?php esc_html_e( 'This is not a recognised AI app (ChatGPT or Claude). Only continue if you started this connection yourself and recognise the address above.', 'nextial-order-events-for-woocommerce' ); ?></p>
+			<p class="warn"><?php esc_html_e( 'This is not a recognised AI app (ChatGPT, Claude or VS Code). Only continue if you started this connection yourself and recognise the address above.', 'nextial-order-events-for-woocommerce' ); ?></p>
 		<?php endif; ?>
 		<p><?php esc_html_e( 'It will be able to:', 'nextial-order-events-for-woocommerce' ); ?></p>
 		<ul>
