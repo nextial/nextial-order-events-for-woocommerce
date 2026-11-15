@@ -32,6 +32,18 @@ class Nextial_OE_OAuth {
 	const REFRESH_TTL = 2592000; // 30 days.
 	const CODE_TTL    = 600;
 
+	/**
+	 * How long a rotated refresh token can still be exchanged (7 days, never
+	 * beyond its own expiry). Real clients send one back: ChatGPT refreshed and
+	 * kept the older token a day later, and ChatGPT Desktop runs parallel
+	 * sessions on one connection, each with its own copy (AI Engine support
+	 * threads, September 2026). Strict single use ended both in invalid_grant
+	 * and a dead connection. A returning token gets its own new pair and no
+	 * other token of the connection is touched; "Disconnect" still removes
+	 * every token, rotated ones included.
+	 */
+	const ROTATED_TTL = 604800;
+
 	const OPT_CLIENTS = 'nextial_oe_oauth_clients';
 	const MAX_CLIENTS = 100;
 
@@ -605,6 +617,10 @@ class Nextial_OE_OAuth {
 
 		if ( 'refresh_token' === $grant ) {
 			$row = self::find_token( $post['refresh_token'] ?? '', 'refresh' );
+			if ( ! $row ) {
+				// A rotated token that comes back: see ROTATED_TTL.
+				$row = self::find_token( $post['refresh_token'] ?? '', 'rotated' );
+			}
 			if ( ! $row || $row['client_id'] !== $client['client_id'] ) {
 				return array( 400, self::err( 'invalid_grant', 'Invalid or expired refresh token.' ) );
 			}
@@ -620,8 +636,8 @@ class Nextial_OE_OAuth {
 					return array( 400, self::err( 'invalid_scope', 'Scope exceeds the original grant.' ) );
 				}
 			}
-			if ( ! self::delete_token_hash( $row['token_hash'] ) ) { // Rotation; a parallel request already used it.
-				return array( 400, self::err( 'invalid_grant', 'Invalid or expired refresh token.' ) );
+			if ( 'refresh' === $row['kind'] ) {
+				self::retire_refresh_token( $row );
 			}
 			return array( 200, self::issue( $row['client_id'], (int) $row['user_id'], $scope ) );
 		}
@@ -791,6 +807,22 @@ class Nextial_OE_OAuth {
 			return null;
 		}
 		return $row;
+	}
+
+	/** Rotation: the refresh token stops being current but stays recoverable for ROTATED_TTL. */
+	private static function retire_refresh_token( array $row ) {
+		global $wpdb;
+		$wpdb->update(
+			Nextial_OE_Store::tokens_table(),
+			array(
+				'kind'       => 'rotated',
+				'expires_at' => min( (int) $row['expires_at'], time() + self::ROTATED_TTL ),
+			),
+			array(
+				'token_hash' => $row['token_hash'],
+				'kind'       => 'refresh',
+			)
+		);
 	}
 
 	/** @return int Rows deleted. */
