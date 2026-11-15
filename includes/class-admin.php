@@ -58,9 +58,17 @@ class Nextial_OE_Admin {
 	}
 
 	/**
-	 * Product page URL (more events with the optional Pro add-on).
+	 * Checkout of the optional Pro add-on: starts the 7-day free trial
+	 * (no card needed). Filterable with nextial_oe_pro_url.
 	 */
-	const PRO_URL = 'https://nextial.it/order-events/';
+	const PRO_URL = 'https://checkout.freemius.com/plugin/41551/plan/72140/?trial=free';
+
+	/**
+	 * Pro add-on URL after the nextial_oe_pro_url filter.
+	 */
+	public static function pro_url() {
+		return (string) apply_filters( 'nextial_oe_pro_url', self::PRO_URL );
+	}
 
 	/**
 	 * Whether an add-on has registered extra events.
@@ -77,7 +85,7 @@ class Nextial_OE_Admin {
 	 */
 	public static function row_meta( $meta, $file ) {
 		if ( plugin_basename( NEXTIAL_OE_FILE ) === $file && ! self::has_addon_events() ) {
-			$meta[] = '<a href="' . esc_url( self::PRO_URL ) . '" target="_blank" rel="noopener">' . esc_html__( 'More events (Pro)', 'nextial-order-events-for-woocommerce' ) . '</a>';
+			$meta[] = '<a href="' . esc_url( self::pro_url() ) . '" target="_blank" rel="noopener">' . esc_html__( 'More events (Pro)', 'nextial-order-events-for-woocommerce' ) . '</a>';
 		}
 		return $meta;
 	}
@@ -468,7 +476,7 @@ class Nextial_OE_Admin {
 				<p><?php esc_html_e( 'Lets ChatGPT react to what happens in your store: every new order. ChatGPT subscribes through MCP Events and receives a signed notification each time.', 'nextial-order-events-for-woocommerce' ); ?></p>
 				<p class="description">
 					<?php esc_html_e( 'Want ChatGPT to also watch failed payments, refunds, low stock, reviews and a daily summary?', 'nextial-order-events-for-woocommerce' ); ?>
-					<a href="<?php echo esc_url( self::PRO_URL ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'See Nextial Order Events Pro (7-day free trial)', 'nextial-order-events-for-woocommerce' ); ?></a>
+					<a href="<?php echo esc_url( self::pro_url() ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'See Nextial Order Events Pro (7-day free trial)', 'nextial-order-events-for-woocommerce' ); ?></a>
 				</p>
 			<?php endif; ?>
 

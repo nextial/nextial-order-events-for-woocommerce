@@ -4,7 +4,7 @@ Tags: woocommerce, chatgpt, mcp, order notifications, new order alert
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.11
+Stable tag: 1.0.12
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -162,6 +162,9 @@ Nextial Order Events implements the open Model Context Protocol (2026-07-28, wit
 3. The built-in self-test, test receiver and delivery log.
 
 == Changelog ==
+
+= 1.0.12 =
+* The "Pro" link on the settings page and in the Plugins list now opens the 7-day free trial checkout directly (no card needed), instead of a product page. Developers can change it with the `nextial_oe_pro_url` filter.
 
 = 1.0.11 =
 * Sign-in: the connection no longer drops when ChatGPT or another assistant sends back an older refresh token (it keeps a previous copy, or runs several sessions on one connection, as ChatGPT Desktop does). Before, the store answered "invalid_grant" and the assistant had to be connected again. A refresh token that was already replaced is still accepted for 7 days and gets its own new tokens; the other sessions keep working. "Disconnect" still removes every token at once. Tested in a lab with Claude, VS Code and Cursor sign-in settings.
