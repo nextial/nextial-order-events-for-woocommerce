@@ -51,6 +51,10 @@ The settings page (WooCommerce → Nextial Order Events) includes a full self-te
 
 Add-ons can register their own events with the filters `nextial_oe_event_definitions`, `nextial_oe_event_matches`, `nextial_oe_event_payload`, `nextial_oe_sample_payload` and queue deliveries with `Nextial_OE_Events::enqueue()`.
 
+## MCP Registry
+
+Listed in the official [MCP Registry](https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.nextial/order-events) as `io.github.nextial/order-events`. The server runs on your own WordPress site, so the registry entry is a URL template: `https://{site}/wp-json/nextial-order-events/v1/mcp` (install the free plugin first; sign-in is OAuth, no keys). Metadata: [`server.json`](server.json).
+
 ## Other Nextial plugins
 
 - [Nextial Form Events](https://github.com/nextial/nextial-form-events) — Contact Form 7, WPForms, Fluent, Gravity and Formidable entries to ChatGPT in real time ([WordPress.org](https://wordpress.org/plugins/nextial-form-events/))

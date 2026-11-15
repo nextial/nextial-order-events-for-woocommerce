@@ -2,10 +2,12 @@
 # (registry.modelcontextprotocol.io) under io.github.nextial/*.
 # The server lives on each customer's site, so server.json uses a URL template:
 # https://{site}/wp-json/.../v1/mcp. Sign-in is GitHub OIDC (no secrets).
-# Dry run (default): schema check only. Version = "Stable tag" in readme.txt.
+# Manual run: dry run by default (schema check only). Tag push: publishes. Version = "Stable tag" in readme.txt.
 name: Publish to MCP Registry
 
 on:
+  push:
+    tags: ["[0-9]+.[0-9]+.[0-9]+"] # same tags as "Deploy to WordPress.org": publish the new version
   workflow_dispatch:
     inputs:
       dry-run:
