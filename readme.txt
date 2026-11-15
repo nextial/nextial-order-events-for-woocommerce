@@ -107,6 +107,10 @@ WooCommerce is a trademark of Automattic Inc. ChatGPT is a trademark of OpenAI. 
 
 == Frequently Asked Questions ==
 
+= I don't receive the WooCommerce "New order" e-mail. Does this help? =
+
+Yes, as a second channel. WooCommerce's new order e-mail depends on your server's mail (or SMTP plugin): when that breaks, the e-mail silently never arrives. Nextial Order Events does not use e-mail at all: your store notifies ChatGPT directly over HTTPS, so you still hear about every order. It does not repair your mail; for that, check WooCommerce → Settings → Emails and your SMTP settings.
+
 = ChatGPT says the plugin has no events, or doesn't see new ones =
 
 ChatGPT keeps a copy of the plugin's tools and events. After installing or updating Nextial Order Events (or an add-on), open ChatGPT Settings → Plugins → your store → **Refresh tools**, then start a new Work chat. If needed, mention the events explicitly, for example: "@YourStore use the plugin's MCP events: tell me here whenever a new order arrives."
