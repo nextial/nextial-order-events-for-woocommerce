@@ -139,6 +139,10 @@ Deliveries are sent in the background by WooCommerce's Action Scheduler (WP-Cron
 
 Update to the latest version. Some assistants send back an older refresh token (a previous copy, or a second session on the same connection); since 1.0.11 this is accepted for 7 days and the connection stays up. If it still happens, open the settings page: "Recent sign-in problems" shows the exact reason, and the OAuth check tells you whether your server blocks the sign-in addresses.
 
+= Sign-in works, but the assistant finds no tools ("action discovery failed") =
+
+The sign-in page runs in your browser, but the tools are fetched by the assistant's own servers (OpenAI, Anthropic). If something in front of WordPress blocks those servers, sign-in succeeds and the tool list never arrives. Check Cloudflare or CDN bot rules, your host's firewall and security plugins, and allow POST requests to `/wp-json/nextial-order-events/v1/mcp`.
+
 = The OAuth check fails =
 
 Your server must let WordPress answer `/.well-known/oauth-protected-resource/...` and `/.well-known/oauth-authorization-server/...`. Some hosts reserve `/.well-known/`. Meanwhile you can use the secret URL option.
